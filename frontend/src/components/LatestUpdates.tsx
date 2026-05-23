@@ -5,7 +5,7 @@ import { motion } from 'motion/react';
 
 const blogs = [
   {
-    title: "Ready2Go Overseas Consultancy Global Education Fair",
+    title: "Ready2Go Overseas Global Education Fair",
     excerpt: "Meet university representatives from the UK, Canada, and Australia with on-spot profile reviews.",
     date: "May 12, 2026",
     author: "Events Team",

@@ -11,7 +11,7 @@ export const Logo = ({ className = "", imageClassName = "" }: LogoProps) => {
     <div className={`flex items-center ${className}`}>
       <img
         src={logoImage}
-        alt="Ready2Go Overseas Consultancy"
+        alt="Ready2Go Overseas"
         className={`h-12 w-auto object-contain ${imageClassName}`}
       />
     </div>

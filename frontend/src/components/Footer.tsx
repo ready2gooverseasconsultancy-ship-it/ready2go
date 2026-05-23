@@ -35,12 +35,12 @@ export const Footer = () => {
             <div className="flex items-center gap-4 mb-6">
               <Logo className="bg-white rounded-2xl p-1.5 shadow-sm border border-white/10" imageClassName="h-10" />
               <div className="leading-snug">
-                <p className="text-lg font-bold text-white">Ready2Go Overseas Consultancy</p>
+                <p className="text-lg font-bold text-white">Ready2Go Overseas</p>
                 <p className="text-[11px] uppercase tracking-[0.3em] text-white/60">Consultancy</p>
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-10">
-              Ready2Go Overseas Consultancy is a boutique visa and immigration consultancy focused on personalized guidance, transparent timelines, and compliant documentation.
+              Ready2Go Overseas is a boutique visa and immigration consultancy focused on personalized guidance, transparent timelines, and compliant documentation.
             </p>
             <div className="flex gap-5">
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
@@ -101,7 +101,7 @@ export const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5 gap-8">
           <p className="text-slate-500 text-xs">
-            © 2026 Ready2Go Overseas Consultancy. All rights reserved.
+            © 2026 Ready2Go Overseas. All rights reserved.
           </p>
           <div className="flex gap-10">
             <a href="#" className="text-slate-500 text-xs hover:text-white transition-colors">Privacy Policy</a>

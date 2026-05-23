@@ -155,7 +155,7 @@ export const Referral = () => {
               'Referral bonus is paid only after the referred client successfully initiates their visa process.',
               'There is no limit to the number of referrals you can make.',
               'Referral rewards are subject to verification by our team.',
-              'The program is open to all existing and new partners of Ready2Go Overseas Consultancy.',
+              'The program is open to all existing and new partners of Ready2Go Overseas.',
             ].map((term, i) => (
               <div key={i} className="flex gap-4 items-start">
                 <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-1" />

@@ -15,7 +15,7 @@ export const ReferralCTA = () => {
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">Know someone planning to go abroad?</h2>
             <p className="text-xl text-white/80 max-w-xl">
-              Refer friends or family to Ready2Go Overseas Consultancy and receive exclusive rewards for every successful application.
+              Refer friends or family to Ready2Go Overseas and receive exclusive rewards for every successful application.
             </p>
           </div>
           <Link to="/referral">

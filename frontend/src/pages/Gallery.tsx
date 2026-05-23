@@ -72,7 +72,7 @@ export const Gallery = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6">Gallery</h1>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              Real success stories and on-ground moments from Ready2Go Overseas Consultancy.
+              Real success stories and on-ground moments from Ready2Go Overseas.
             </p>
           </motion.div>
         </div>

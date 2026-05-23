@@ -57,7 +57,7 @@ export const Navbar = () => {
           <Link to="/" className="shrink-0 flex items-center gap-3 min-w-0">
             <Logo className="bg-white rounded-2xl p-1.5 shadow-sm border border-slate-200" imageClassName="h-10" />
             <span className="hidden md:block text-[13px] font-bold text-brand-blue tracking-wide leading-tight max-w-[180px] lg:max-w-none">
-              Ready2Go Overseas Consultancy
+              Ready2Go Overseas
             </span>
           </Link>
 

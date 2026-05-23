@@ -49,7 +49,7 @@ export const TrustElements = () => {
             Proof of Success, Partnerships, and Presence
           </h2>
           <p className="text-slate-500 max-w-2xl mx-auto">
-            Real outcomes and global partnerships that showcase the Ready2Go Overseas Consultancy difference.
+            Real outcomes and global partnerships that showcase the Ready2Go Overseas difference.
           </p>
         </div>
 

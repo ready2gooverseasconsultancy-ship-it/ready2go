@@ -26,13 +26,13 @@ export const Hero = () => {
           >
             <div className="inline-flex items-center gap-2 bg-brand-blue/10 px-4 py-2 rounded-full mb-6 reveal-up">
               <Star className="w-4 h-4 text-brand-orange fill-brand-orange" />
-              <span className="text-brand-blue text-xs font-bold uppercase tracking-widest">Trusted Overseas Partner</span>
+              <span className="text-brand-blue text-xs font-bold uppercase tracking-widest">Ready2Go Overseas</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight mb-6 reveal-up">
-              Start your global journey with expert visa guidance.
+              Ready2Go Overseas helps you start your global journey with expert visa guidance.
             </h1>
             <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-xl reveal-up">
-              Plan your global journey with clarity. We guide students, professionals, and families through every visa milestone with transparent advice and hands-on support.
+              Plan your global journey with clarity. Ready2Go Overseas guides students, professionals, and families through every visa milestone with transparent advice and hands-on support.
             </p>
             
             <div className="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 mb-10 group hover:border-brand-orange transition-colors soft-shadow">

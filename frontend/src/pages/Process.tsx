@@ -88,7 +88,7 @@ export const Process = () => {
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Ready to Start?</h2>
               <p className="text-xl text-white/70 mb-12 max-w-2xl mx-auto">
-                Join thousands of successful applicants who have achieved their dreams with Ready2Go Overseas Consultancy.
+                Join thousands of successful applicants who have achieved their dreams with Ready2Go Overseas.
               </p>
               <button className="bg-brand-orange text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-brand-blue transition-all flex items-center gap-3 mx-auto group">
                 Book Free Consultation <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />

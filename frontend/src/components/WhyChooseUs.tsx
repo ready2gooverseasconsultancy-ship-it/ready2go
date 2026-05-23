@@ -39,10 +39,10 @@ export const WhyChooseUs = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="section-title mb-4">Why Ready2Go Overseas Consultancy</h2>
+            <h2 className="section-title mb-4">Why Ready2Go Overseas</h2>
             <h3 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8 uppercase">Why Choose Us?</h3>
             <p className="text-slate-600 text-lg leading-relaxed mb-12">
-              Ready2Go Overseas Consultancy combines on-ground experience with a modern workflow so you can move abroad with confidence, clarity, and a clear timeline.
+              Ready2Go Overseas combines on-ground experience with a modern workflow so you can move abroad with confidence, clarity, and a clear timeline.
             </p>
             
             <div className="grid sm:grid-cols-2 gap-8">

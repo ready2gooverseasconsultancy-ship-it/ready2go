@@ -13,7 +13,7 @@ export const About = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">About Ready2Go Overseas Consultancy</h1>
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">About Ready2Go Overseas</h1>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Guiding global journeys with clarity, care, and compliant documentation.
             </p>
@@ -31,9 +31,9 @@ export const About = () => {
             viewport={{ once: true }}
           >
             <h2 className="section-title mb-4">Who We Are</h2>
-            <h3 className="text-4xl font-bold text-slate-900 mb-6">Ready2Go Overseas Consultancy</h3>
+            <h3 className="text-4xl font-bold text-slate-900 mb-6">Ready2Go Overseas</h3>
             <p className="text-slate-600 text-lg leading-relaxed mb-6">
-              Founded to simplify the complex world of international immigration, Ready2Go Overseas Consultancy has grown into a trusted partner for students, professionals, and families planning their global move.
+              Founded to simplify the complex world of international immigration, Ready2Go Overseas has grown into a trusted partner for students, professionals, and families planning their global move.
             </p>
             <p className="text-slate-600 text-lg leading-relaxed">
               Our team of certified consultants brings years of experience across major global destinations including the USA, UK, Canada, Australia, and Europe.
