@@ -1,18 +1,24 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Ready2Go Overseas Consultancy
 
-# Run and deploy your app
+This repo is now split into separate frontend and backend folders.
 
-This contains everything you need to run your app locally.
+## Structure
+
+- `frontend/` - Vite + React app
+- `backend/` - Express API starter
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
+Frontend:
 
+1. `cd frontend`
+2. `npm install`
+3. Set `GEMINI_API_KEY` in [frontend/.env.example](frontend/.env.example)
+4. `npm run dev`
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Backend:
+
+1. `cd backend`
+2. `npm install`
+3. Set any backend env vars in [backend/.env.example](backend/.env.example)
+4. `npm run dev`
