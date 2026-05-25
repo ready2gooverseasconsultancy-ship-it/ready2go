@@ -1,8 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { motion } from 'motion/react';
+import { sendContactMessage } from '../lib/contactApi';
 
 export const Contact = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    visaType: 'Student Visa',
+    message: '',
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus('sending');
+    setError('');
+
+    try {
+      await sendContactMessage({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: `${form.message}\nVisa Type: ${form.visaType}`,
+      });
+      setStatus('success');
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        visaType: 'Student Visa',
+        message: '',
+      });
+    } catch (submitError) {
+      setStatus('error');
+      setError(submitError instanceof Error ? submitError.message : 'Failed to send message');
+    }
+  };
+
   return (
     <section id="contact" className="section-padding bg-slate-50 relative overflow-hidden">
       {/* Background World Map */}
@@ -66,13 +103,15 @@ export const Contact = () => {
             viewport={{ once: true }}
             className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-100"
           >
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 ml-1">Full Name</label>
                   <input 
                     type="text" 
                     placeholder="John Doe"
+                    value={form.name}
+                    onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
                     className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all"
                   />
                 </div>
@@ -81,6 +120,8 @@ export const Contact = () => {
                   <input 
                     type="email" 
                     placeholder="john@example.com"
+                    value={form.email}
+                    onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
                     className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all"
                   />
                 </div>
@@ -91,12 +132,18 @@ export const Contact = () => {
                   <input 
                     type="tel" 
                     placeholder="+1 234 567 890"
+                    value={form.phone}
+                    onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
                     className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all"
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 ml-1">Visa Type</label>
-                  <select className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all appearance-none">
+                  <select
+                    value={form.visaType}
+                    onChange={(e) => setForm((prev) => ({ ...prev, visaType: e.target.value }))}
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all appearance-none"
+                  >
                     <option>Student Visa</option>
                     <option>Work Visa</option>
                     <option>Tourist Visa</option>
@@ -104,21 +151,29 @@ export const Contact = () => {
                   </select>
                 </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700 ml-1">Your Message</label>
-                <textarea 
-                  rows={4}
-                  placeholder="Tell us about your requirements..."
-                  className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all resize-none"
-                ></textarea>
-              </div>
-              <button className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold text-lg hover:bg-brand-blue transition-all flex items-center justify-center gap-3 shadow-lg shadow-brand-orange/20 group">
-                Book Free Consultation
-                <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </button>
-            </form>
-          </motion.div>
-        </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-700 ml-1">Your Message</label>
+                  <textarea 
+                    rows={4}
+                    placeholder="Tell us about your requirements..."
+                    value={form.message}
+                    onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))}
+                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all resize-none"
+                  ></textarea>
+                </div>
+                <button type="submit" disabled={status === 'sending'} className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold text-lg hover:bg-brand-blue transition-all flex items-center justify-center gap-3 shadow-lg shadow-brand-orange/20 group disabled:opacity-70">
+                  {status === 'sending' ? 'Sending...' : 'Book Free Consultation'}
+                  <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </button>
+                {status === 'success' && (
+                  <p className="text-sm font-semibold text-emerald-600">Thanks! Your message has been sent.</p>
+                )}
+                {status === 'error' && (
+                  <p className="text-sm font-semibold text-red-600">{error}</p>
+                )}
+              </form>
+            </motion.div>
+          </div>
       </div>
     </section>
   );

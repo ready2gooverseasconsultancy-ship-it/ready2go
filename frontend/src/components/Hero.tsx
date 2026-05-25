@@ -1,9 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Star, Send } from 'lucide-react';
+import { sendContactMessage } from '../lib/contactApi';
 
 export const Hero = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    visaTrack: 'Study Abroad',
+  });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus('sending');
+    setError('');
+
+    try {
+      await sendContactMessage({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        message: `Interested in: ${form.visaTrack}`,
+      });
+      setStatus('success');
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        visaTrack: 'Study Abroad',
+      });
+    } catch (submitError) {
+      setStatus('error');
+      setError(submitError instanceof Error ? submitError.message : 'Failed to send message');
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center pt-36 pb-12 overflow-hidden bg-slate-50">
       {/* Background Image with Overlay */}
@@ -69,33 +104,48 @@ export const Hero = () => {
             <h3 className="text-3xl font-bold text-slate-900 mb-2">Book Free Consultation</h3>
             <p className="text-slate-500 mb-8">Tell us your goal and we will respond within one business day.</p>
             
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <input 
                 type="text" 
                 placeholder="Full Name" 
+                value={form.name}
+                onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
                 className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
               />
               <input 
                 type="email" 
                 placeholder="Email Address" 
+                value={form.email}
+                onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
                 className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
               />
               <input 
                 type="tel" 
                 placeholder="Phone Number" 
+                value={form.phone}
+                onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
                 className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
               />
-              <select className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none appearance-none">
-                <option>Select a Visa Track</option>
+              <select
+                value={form.visaTrack}
+                onChange={(e) => setForm((prev) => ({ ...prev, visaTrack: e.target.value }))}
+                className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none appearance-none"
+              >
                 <option>Study Abroad</option>
                 <option>Skilled Migration</option>
                 <option>Tourist / Visitor</option>
                 <option>Family Sponsorship</option>
               </select>
-              <button className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold text-lg hover:bg-brand-blue transition-all flex items-center justify-center gap-3 group">
-                Book Free Consultation
+              <button type="submit" disabled={status === 'sending'} className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold text-lg hover:bg-brand-blue transition-all flex items-center justify-center gap-3 group disabled:opacity-70">
+                {status === 'sending' ? 'Sending...' : 'Book Free Consultation'}
                 <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
+              {status === 'success' && (
+                <p className="text-sm font-semibold text-emerald-600">Thanks! Your message has been sent.</p>
+              )}
+              {status === 'error' && (
+                <p className="text-sm font-semibold text-red-600">{error}</p>
+              )}
             </form>
           </motion.div>
         </div>
