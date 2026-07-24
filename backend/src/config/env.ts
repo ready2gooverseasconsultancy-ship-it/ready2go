@@ -1,6 +1,7 @@
 export interface EnvConfig {
   readonly port: number;
-  readonly frontendOrigin: string;
+  /** Comma-separated list of allowed CORS origins. */
+  frontendOrigins: string[];
   readonly nodeEnv: string;
 
   /** Master switch — when false the CRM call is skipped and a placeholder success is returned. */
@@ -19,6 +20,11 @@ export interface EnvConfig {
 
 function fail(message: string): never {
   throw new Error(`Environment configuration error: ${message}`);
+}
+
+function parseOrigins(raw: string | undefined): string[] {
+  if (!raw) return ['https://ready2goweb.vercel.app', 'https://www.ready2gooverseas.com'];
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
 }
 
 function loadEnv(): EnvConfig {
@@ -64,7 +70,7 @@ function loadEnv(): EnvConfig {
 
   return {
     port,
-    frontendOrigin: process.env.FRONTEND_ORIGIN ?? 'https://www.ready2gooverseas.com',
+    frontendOrigins: parseOrigins(process.env.FRONTEND_ORIGIN),
     nodeEnv: process.env.NODE_ENV ?? 'development',
     crmEnabled,
     crmBaseUrl,

@@ -58,7 +58,7 @@ app.use((_req, res, next) => {
 
 app.use(
   cors({
-    origin: env.frontendOrigin,
+    origin: env.frontendOrigins,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'X-Request-ID'],
     maxAge: 86400,
