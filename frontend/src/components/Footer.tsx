@@ -133,12 +133,11 @@ export const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-white/5 gap-8">
           <p className="text-slate-500 text-xs">
-            © 2026 Ready2Go Overseas. All rights reserved.
+            &copy; {new Date().getFullYear()} Ready2Go Overseas. All rights reserved.
           </p>
           <div className="flex gap-10">
-            <Link to="/privacy-policy" className="text-slate-500 text-xs hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="text-slate-500 text-xs hover:text-white transition-colors">Terms of Service</Link>
-            <Link to="/privacy-policy" className="text-slate-500 text-xs hover:text-white transition-colors">Cookie Policy</Link>
+            <Link to="/contact" className="text-slate-500 text-xs hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/contact" className="text-slate-500 text-xs hover:text-white transition-colors">Terms of Service</Link>
           </div>
           <button
             onClick={scrollToTop}

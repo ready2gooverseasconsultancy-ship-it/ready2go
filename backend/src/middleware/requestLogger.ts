@@ -7,15 +7,16 @@ export function requestLogger(
   next: NextFunction,
 ): void {
   const start = performance.now();
-  const timestamp = new Date().toISOString();
-  const { method, originalUrl } = req;
 
   res.on('finish', () => {
     const duration = (performance.now() - start).toFixed(2);
     const { statusCode } = res;
+    const requestId = req.headers['x-request-id'] as string ?? '-';
+    const contentLength = res.getHeader('content-length') ?? '-';
 
-    logger.info(
-      `[${timestamp}] ${method} ${originalUrl} → ${statusCode} (${duration}ms)`,
+    const level = statusCode >= 500 ? 'error' : statusCode >= 400 ? 'warn' : 'info';
+    logger[level](
+      `[${requestId}] ${req.method} ${req.originalUrl} → ${statusCode} ${contentLength} ${duration}ms`,
     );
   });
 

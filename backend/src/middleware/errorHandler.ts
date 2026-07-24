@@ -9,11 +9,17 @@ export interface AppError extends Error {
 
 export function errorHandler(
   err: AppError,
-  _req: Request,
+  req: Request,
   res: Response,
   _next: NextFunction,
 ): void {
-  logger.error('Unhandled error:', err.message);
+  const requestId = req.headers['x-request-id'] as string ?? 'unknown';
+
+  logger.error(
+    `[${requestId}] Unhandled error:`,
+    err.message,
+    envSupportsStack() ? err.stack : undefined,
+  );
 
   const statusCode = err.statusCode ?? HTTP_STATUS.INTERNAL_SERVER_ERROR;
   const code = err.code ?? ERROR_CODES.INTERNAL_SERVER_ERROR;
@@ -26,5 +32,10 @@ export function errorHandler(
     success: false,
     message,
     code,
+    ...(requestId ? { requestId } : {}),
   });
+}
+
+function envSupportsStack(): boolean {
+  return process.env.NODE_ENV !== 'production';
 }

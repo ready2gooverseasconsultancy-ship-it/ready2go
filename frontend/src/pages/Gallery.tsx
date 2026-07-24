@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { ZoomIn } from 'lucide-react';
+import { SeoHead } from '../components/Seo Head';
 import photo18 from '../assets/PHOTOS/Untitled design (18).webp';
 import photo21 from '../assets/PHOTOS/Untitled design (21).webp';
 import photo22 from '../assets/PHOTOS/Untitled design (22).webp';
@@ -67,6 +68,11 @@ export const Gallery = () => {
 
   return (
     <div className="pt-32">
+      <SeoHead
+        title="Gallery | Ready2Go Overseas Consultancy"
+        description="Real visa success stories and office highlights from Ready2Go Overseas. See our clients' achievements."
+        canonicalPath="/gallery"
+      />
       <section className="section-padding bg-slate-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
@@ -130,7 +136,8 @@ export const Gallery = () => {
       </section>
 
       {activePhoto && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 p-6">
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 p-6" role="dialog" aria-modal="true" aria-label="Photo viewer">
           <button
             onClick={closePhoto}
             className="absolute inset-0 cursor-zoom-out"

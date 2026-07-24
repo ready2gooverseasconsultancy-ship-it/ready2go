@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Calendar, User, ArrowRight, Search } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { SeoHead } from '../components/Seo Head';
 import visaTipsImage from '../assets/images/visa tips.webp';
 
 const blogs = [
@@ -62,6 +64,11 @@ export const Updates = () => {
 
   return (
     <div className="pt-32">
+      <SeoHead
+        title="Latest Updates | Ready2Go Overseas Consultancy"
+        description="Stay informed with immigration news, visa tips, and study abroad guides from Ready2Go Overseas."
+        canonicalPath="/updates"
+      />
       <section className="section-padding bg-slate-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
@@ -77,9 +84,10 @@ export const Updates = () => {
 
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto relative">
-            <input 
-              type="text" 
-              placeholder="Search for updates..." 
+            <input
+              type="text"
+              placeholder="Search for updates..."
+              aria-label="Search updates"
               className="w-full px-8 py-5 rounded-full bg-white shadow-xl border-none focus:ring-2 focus:ring-brand-blue outline-none pl-16"
             />
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 w-6 h-6" />
@@ -124,9 +132,9 @@ export const Updates = () => {
                 <p className="text-slate-500 leading-relaxed mb-8 line-clamp-3">
                   {blog.excerpt}
                 </p>
-                <a href="#" className="inline-flex items-center gap-2 text-brand-blue font-bold group-hover:gap-4 transition-all">
+                <Link to="/contact" className="inline-flex items-center gap-2 text-brand-blue font-bold group-hover:gap-4 transition-all">
                   Read Full Article <ArrowRight className="w-5 h-5" />
-                </a>
+                </Link>
               </motion.div>
             ))}
           </div>

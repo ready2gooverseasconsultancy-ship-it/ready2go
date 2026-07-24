@@ -70,6 +70,7 @@ export const Navbar = () => {
                 : 'text-slate-600 hover:bg-slate-100 hover:text-brand-blue'
             }`}
             aria-expanded={isStudyOpen}
+            aria-current={isActive(href) ? 'page' : undefined}
           >
             {name}
             <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isStudyOpen ? 'rotate-180' : ''}`} />
@@ -116,6 +117,7 @@ export const Navbar = () => {
             ? 'bg-brand-blue text-white shadow-md'
             : 'text-slate-600 hover:bg-slate-100 hover:text-brand-blue'
         }`}
+        aria-current={isActive(href) ? 'page' : undefined}
       >
         {name}
       </Link>
@@ -125,6 +127,7 @@ export const Navbar = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <nav
+        aria-label="Primary navigation"
         className={`transition-all duration-300 ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-xl shadow-sm border-b border-slate-200/60'

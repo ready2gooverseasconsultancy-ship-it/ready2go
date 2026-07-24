@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Gift, Share2, Wallet, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useInquiryForm } from '../lib/useInquiryForm';
+import { SeoHead } from '../components/Seo Head';
 
 interface ReferralFieldErrors {
   firstName?: string;
@@ -86,6 +87,11 @@ export const Referral = () => {
 
   return (
     <div className="pt-24 pb-20">
+      <SeoHead
+        title="Referral Program | Earn Rewards | Ready2Go Overseas Consultancy"
+        description="Refer friends and earn rewards with the Ready2Go Overseas referral program. Spread the word about trusted visa services."
+        canonicalPath="/referral"
+      />
       {/* Hero Section */}
       <section className="bg-brand-blue py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">

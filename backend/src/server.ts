@@ -2,7 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import compression from 'compression';
 import rateLimit from 'express-rate-limit';
+import { randomUUID } from 'node:crypto';
 import { env } from './config/env.js';
 import { requestLogger } from './middleware/requestLogger.js';
 import { errorHandler } from './middleware/errorHandler.js';
@@ -10,6 +12,19 @@ import contactRoutes from './routes/contactRoutes.js';
 import { logger } from './utils/logger.js';
 
 const app = express();
+
+/* ---------- Trust proxy for accurate IP detection behind reverse proxies ---------- */
+app.set('trust proxy', 1);
+
+/* ---------- Compression ---------- */
+app.use(compression());
+
+/* ---------- Request ID middleware ---------- */
+app.use((req, _res, next) => {
+  const requestId = (req.headers['x-request-id'] as string) ?? randomUUID();
+  req.headers['x-request-id'] = requestId;
+  next();
+});
 
 /* ---------- Security ---------- */
 app.use(
@@ -28,16 +43,32 @@ app.use(
       },
     },
     crossOriginEmbedderPolicy: false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
   }),
 );
+
+/* ---------- Permissions Policy ---------- */
+app.use((_req, res, next) => {
+  res.setHeader(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  );
+  next();
+});
 
 app.use(
   cors({
     origin: env.frontendOrigin,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'X-Request-ID'],
+    maxAge: 86400,
   }),
 );
 app.use(express.json({ limit: '100kb' }));
 app.use(requestLogger);
+
+/* ---------- ETag ---------- */
+app.set('etag', 'strong');
 
 /* ---------- Rate limiting ---------- */
 const contactLimiter = rateLimit({
@@ -96,19 +127,38 @@ ${urls.map(u => `  <url>
     <priority>${u.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
+  res.setHeader('Cache-Control', 'public, max-age=3600');
   res.send(xml);
 });
 
+/* ---------- Health / readiness / liveness endpoints ---------- */
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/ready', (_req, res) => {
+  res.json({ status: 'ready', uptime: process.uptime() });
+});
+
+app.get('/api/live', (_req, res) => {
+  res.json({ status: 'alive' });
+});
+
+/* ---------- Contact routes ---------- */
 app.use(contactRoutes);
 
+/* ---------- Error handler ---------- */
 app.use(errorHandler);
 
+/* ---------- Server start ---------- */
 const server = app.listen(env.port, '0.0.0.0', () => {
   logger.info(`Backend server running on http://localhost:${env.port}`);
 });
 
+/* ---------- Graceful shutdown ---------- */
 function gracefulShutdown(signal: string): void {
   logger.info(`Received ${signal}. Shutting down gracefully...`);
+
   server.close(() => {
     logger.info('Server closed.');
     process.exit(0);

@@ -63,6 +63,7 @@ export const Hero = () => {
           className="w-full h-full object-cover opacity-[0.12]"
           referrerPolicy="no-referrer"
           aria-hidden="true"
+          fetchpriority="high"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-50 via-slate-50/92 to-transparent" />
         {/* Accent orbs */}

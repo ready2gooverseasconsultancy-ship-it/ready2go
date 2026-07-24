@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Search, ArrowRight, GraduationCap, Globe2, Sparkles, Landmark } from 'lucide-react';
+import { SeoHead } from '../components/Seo Head';
 import {
   defaultStudyDestinationKey,
   studyDestinationTabs,
@@ -34,6 +35,11 @@ export const StudyDestinationsPage = () => {
 
   return (
     <div className="bg-white">
+      <SeoHead
+        title="Study Destinations | Ready2Go Overseas Consultancy"
+        description="Explore top study abroad destinations including USA, Canada, UK, Australia, Germany, and more. Expert guidance for every country."
+        canonicalPath="/study-destinations"
+      />
       <section className="pt-44 md:pt-48 lg:pt-52 pb-12 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <motion.div

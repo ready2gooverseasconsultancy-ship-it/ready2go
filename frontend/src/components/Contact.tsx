@@ -66,6 +66,7 @@ export const Contact = () => {
           alt="World Map"
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
+          loading="lazy"
         />
       </div>
       <div className="max-w-7xl mx-auto relative z-10">

@@ -67,33 +67,15 @@ export function SeoHead({
     setMeta('twitter:image', ogImage, true);
     setLink('canonical', fullUrl);
 
-    // Structured data — Organization + WebSite
+    // Structured data — per-page WebPage only (Org/WebSite live in index.html)
     const structured = {
       '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'Organization',
-          '@id': `${BASE_URL}/#organization`,
-          name: 'Ready2Go Overseas',
-          url: BASE_URL,
-        },
-        {
-          '@type': 'WebSite',
-          '@id': `${BASE_URL}/#website`,
-          name: 'Ready2Go Overseas',
-          alternateName: 'Ready2Go Overseas Consultancy',
-          url: BASE_URL,
-          publisher: { '@id': `${BASE_URL}/#organization` },
-        },
-        {
-          '@type': 'WebPage',
-          '@id': fullUrl,
-          url: fullUrl,
-          name: title,
-          description,
-          isPartOf: { '@id': `${BASE_URL}/#website` },
-        },
-      ],
+      '@type': 'WebPage',
+      '@id': fullUrl,
+      url: fullUrl,
+      name: title,
+      description,
+      isPartOf: { '@id': `${BASE_URL}/#website` },
     };
 
     let script = document.querySelector('#structured-data') as HTMLScriptElement | null;

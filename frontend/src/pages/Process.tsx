@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { MessageSquare, FileText, Send, CheckCircle, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { SeoHead } from '../components/Seo Head';
 
 const steps = [
   {
@@ -36,6 +38,11 @@ const steps = [
 export const Process = () => {
   return (
     <div className="pt-32">
+      <SeoHead
+        title="Application Process | Ready2Go Overseas Consultancy"
+        description="Step-by-step visa application process from consultation to approval. Transparent, guided, and hassle-free."
+        canonicalPath="/process"
+      />
       <section className="section-padding bg-brand-orange text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <motion.div
@@ -90,9 +97,9 @@ export const Process = () => {
               <p className="text-xl text-white/70 mb-12 max-w-2xl mx-auto">
                 Join thousands of successful applicants who have achieved their dreams with Ready2Go Overseas.
               </p>
-              <button className="bg-brand-orange text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-brand-blue transition-all flex items-center gap-3 mx-auto group">
+              <Link to="/contact" className="bg-brand-orange text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-brand-blue transition-all flex items-center gap-3 mx-auto group inline-flex">
                 Book Free Consultation <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </button>
+              </Link>
             </div>
             <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2"></div>
           </div>

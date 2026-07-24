@@ -117,6 +117,7 @@ export const About = () => {
                   alt="Ready2Go Overseas team"
                   className="w-full h-full object-cover"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white p-8 rounded-2xl shadow-xl border border-slate-100 hidden md:block">

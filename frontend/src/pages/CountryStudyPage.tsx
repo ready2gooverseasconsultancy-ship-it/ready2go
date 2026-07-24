@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { SeoHead } from '../components/Seo Head';
 import {
   ArrowRight,
   BadgeCheck,
@@ -37,6 +38,11 @@ export const CountryStudyPage = () => {
 
   return (
     <div className="bg-white">
+      <SeoHead
+        title={`Study in ${country.shortTitle} | Ready2Go Overseas Consultancy`}
+        description={country.tagline}
+        canonicalPath={`/country/${country.slug}`}
+      />
       <section className="pt-44 md:pt-48 lg:pt-52 pb-16 bg-slate-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
@@ -96,6 +102,7 @@ export const CountryStudyPage = () => {
                   className="h-[420px] w-full object-cover"
                   loading="eager"
                   decoding="async"
+                  fetchpriority="high"
                   referrerPolicy="no-referrer"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-slate-950/10 to-transparent" />

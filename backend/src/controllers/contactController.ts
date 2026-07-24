@@ -42,10 +42,6 @@ export async function handleContactPost(
   });
 }
 
-export function handleHealth(_req: Request, res: Response): void {
-  res.json({ status: 'ok' });
-}
-
 export function handleRoot(_req: Request, res: Response): void {
-  res.json({ message: 'Backend is running' });
+  res.json({ message: 'Backend is running', timestamp: new Date().toISOString() });
 }

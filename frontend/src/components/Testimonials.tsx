@@ -152,7 +152,7 @@ export const Testimonials = () => {
       {/* Google review link */}
       <div className="text-center mt-12">
         <a
-          href="https://g.co/kgs/your-google-review-link"
+          href="https://search.google.com/local/writereview?placeid=PLACE_ID_HERE"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-brand-blue transition-colors"

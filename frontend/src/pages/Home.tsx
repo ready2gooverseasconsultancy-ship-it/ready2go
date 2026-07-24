@@ -15,10 +15,16 @@ import { ReferralCTA } from '../components/ReferralCTA';
 import { Faq } from '../components/Faq';
 import { Button } from '../components/ui/Button';
 import { ArrowRight } from 'lucide-react';
+import { SeoHead } from '../components/Seo Head';
 
 export const Home = () => {
   return (
     <>
+      <SeoHead
+        title="Ready2Go Overseas | Study Abroad, Visa & Immigration"
+        description="Trusted visa and immigration consultancy for students, professionals, and families. 8+ years of expertise, 500+ success stories, free consultation."
+        canonicalPath="/"
+      />
       <Hero />
       <ExperienceHighlight />
       <Partners />
