@@ -4,6 +4,21 @@ import { Mail, Phone, MapPin, Send, Clock, Globe } from 'lucide-react';
 import { useInquiryForm } from '../lib/useInquiryForm';
 import { SeoHead } from '../components/Seo Head';
 
+interface FieldErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+}
+
+function validateRequired(value: string, label: string): string | undefined {
+  return value.trim() ? undefined : `${label} is required`;
+}
+
+function validateEmail(value: string): string | undefined {
+  if (!value.trim()) return 'Email is required';
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? undefined : 'Please enter a valid email';
+}
+
 export const Contact = () => {
   const [form, setForm] = useState({
     name: '',
@@ -12,10 +27,32 @@ export const Contact = () => {
     visaType: 'Student Visa',
     message: '',
   });
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const { status, error, submit } = useInquiryForm();
+
+  const validate = (): boolean => {
+    const errors: FieldErrors = {};
+    errors.name = validateRequired(form.name, 'Name');
+    errors.email = validateEmail(form.email);
+    errors.message = validateRequired(form.message, 'Message');
+    const filtered = Object.fromEntries(
+      Object.entries(errors).filter(([, v]) => v !== undefined),
+    ) as FieldErrors;
+    setFieldErrors(filtered);
+    return Object.keys(filtered).length === 0;
+  };
+
+  const clearFieldError = (field: keyof FieldErrors) => {
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!validate()) return;
     const ok = await submit({
       name: form.name,
       email: form.email,
@@ -31,8 +68,16 @@ export const Contact = () => {
         visaType: 'Student Visa',
         message: '',
       });
+      setFieldErrors({});
     }
   };
+
+  const fieldClass = (field: keyof FieldErrors) =>
+    `w-full px-6 py-4 rounded-2xl outline-none transition-all ${
+      fieldErrors[field]
+        ? 'bg-red-50 border-2 border-red-300 focus:ring-2 focus:ring-red-400'
+        : 'bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue'
+    }`;
 
   return (
     <>
@@ -100,33 +145,46 @@ export const Contact = () => {
                 className="bg-white p-10 md:p-16 rounded-[3rem] shadow-2xl border border-slate-100"
               >
                 <h3 className="text-3xl font-bold text-slate-900 mb-8">Send Us a Message</h3>
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">Full Name</label>
+                      <label className="text-sm font-bold text-slate-700 ml-1" htmlFor="contact-name">Full Name <span className="text-red-500">*</span></label>
                       <input
+                        id="contact-name"
                         type="text"
                         placeholder="John Doe"
                         value={form.name}
-                        onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all"
+                        required
+                        aria-required="true"
+                        aria-invalid={!!fieldErrors.name}
+                        aria-describedby={fieldErrors.name ? 'contact-name-error' : undefined}
+                        onChange={(e) => { setForm((prev) => ({ ...prev, name: e.target.value })); clearFieldError('name'); }}
+                        className={fieldClass('name')}
                       />
+                      {fieldErrors.name && <p id="contact-name-error" className="text-xs font-semibold text-red-500 ml-1" role="alert">{fieldErrors.name}</p>}
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">Email Address</label>
+                      <label className="text-sm font-bold text-slate-700 ml-1" htmlFor="contact-email">Email Address <span className="text-red-500">*</span></label>
                       <input
+                        id="contact-email"
                         type="email"
                         placeholder="john@example.com"
                         value={form.email}
-                        onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
-                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all"
+                        required
+                        aria-required="true"
+                        aria-invalid={!!fieldErrors.email}
+                        aria-describedby={fieldErrors.email ? 'contact-email-error' : undefined}
+                        onChange={(e) => { setForm((prev) => ({ ...prev, email: e.target.value })); clearFieldError('email'); }}
+                        className={fieldClass('email')}
                       />
+                      {fieldErrors.email && <p id="contact-email-error" className="text-xs font-semibold text-red-500 ml-1" role="alert">{fieldErrors.email}</p>}
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">Phone Number</label>
+                      <label className="text-sm font-bold text-slate-700 ml-1" htmlFor="contact-phone">Phone Number</label>
                       <input
+                        id="contact-phone"
                         type="tel"
                         placeholder="+1 234 567 890"
                         value={form.phone}
@@ -135,8 +193,9 @@ export const Contact = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">Visa Type</label>
+                      <label className="text-sm font-bold text-slate-700 ml-1" htmlFor="contact-visa-type">Visa Type</label>
                       <select
+                        id="contact-visa-type"
                         value={form.visaType}
                         onChange={(e) => setForm((prev) => ({ ...prev, visaType: e.target.value }))}
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all appearance-none"
@@ -149,24 +208,39 @@ export const Contact = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700 ml-1">Your Message</label>
+                    <label className="text-sm font-bold text-slate-700 ml-1" htmlFor="contact-message">Your Message <span className="text-red-500">*</span></label>
                     <textarea
+                      id="contact-message"
                       rows={4}
                       placeholder="Tell us about your requirements..."
                       value={form.message}
-                      onChange={(e) => setForm((prev) => ({ ...prev, message: e.target.value }))}
-                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none transition-all resize-none"
+                      required
+                      aria-required="true"
+                      aria-invalid={!!fieldErrors.message}
+                      aria-describedby={fieldErrors.message ? 'contact-message-error' : undefined}
+                      onChange={(e) => { setForm((prev) => ({ ...prev, message: e.target.value })); clearFieldError('message'); }}
+                      className={fieldClass('message')}
                     ></textarea>
+                    {fieldErrors.message && <p id="contact-message-error" className="text-xs font-semibold text-red-500 ml-1" role="alert">{fieldErrors.message}</p>}
                   </div>
                   <button type="submit" disabled={status === 'sending'} className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold text-lg hover:bg-brand-blue transition-all flex items-center justify-center gap-3 shadow-lg shadow-brand-orange/20 group disabled:opacity-70">
-                    {status === 'sending' ? 'Sending...' : 'Book Free Consultation'}
-                    <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    {status === 'sending' ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </span>
+                    ) : (
+                      <>
+                        Book Free Consultation
+                        <Send className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </>
+                    )}
                   </button>
                   {status === 'success' && (
-                    <p className="text-sm font-semibold text-emerald-600">Thanks! Your message has been sent.</p>
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-semibold text-emerald-600 text-center">Thanks! Your message has been sent.</motion.p>
                   )}
                   {status === 'error' && (
-                    <p className="text-sm font-semibold text-red-600">{error}</p>
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-semibold text-red-600 text-center">{error}</motion.p>
                   )}
                 </form>
               </motion.div>

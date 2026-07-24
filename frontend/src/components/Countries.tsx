@@ -36,7 +36,7 @@ const FALLBACK_IMAGE =
   "<circle cx='120' cy='300' r='80' fill='%231f6b3b' opacity='0.25'/>" +
   "</svg>";
 
-const CountryCard = ({ country, index }: { country: CountryEntry; index: number }) => {
+const CountryCard = ({ country, index }: { country: CountryEntry; index: number; key?: string }) => {
   const card = (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

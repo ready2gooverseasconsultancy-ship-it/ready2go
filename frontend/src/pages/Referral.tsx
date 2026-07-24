@@ -3,6 +3,11 @@ import { motion } from 'motion/react';
 import { Gift, Share2, Wallet, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useInquiryForm } from '../lib/useInquiryForm';
 
+interface ReferralFieldErrors {
+  firstName?: string;
+  email?: string;
+}
+
 export const Referral = () => {
   const [form, setForm] = useState({
     firstName: '',
@@ -11,10 +16,25 @@ export const Referral = () => {
     phone: '',
     message: '',
   });
+  const [fieldErrors, setFieldErrors] = useState<ReferralFieldErrors>({});
   const { status, error, submit } = useInquiryForm();
+
+  const validate = (): boolean => {
+    const errors: ReferralFieldErrors = {};
+    if (!form.firstName.trim()) errors.firstName = 'First name is required';
+    if (!form.email.trim()) errors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = 'Please enter a valid email';
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const clearErr = (f: keyof ReferralFieldErrors) => {
+    setFieldErrors((prev) => { const n = { ...prev }; delete n[f]; return n; });
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!validate()) return;
     const fullName = `${form.firstName} ${form.lastName}`.trim();
     const ok = await submit({
       name: fullName,
@@ -23,13 +43,8 @@ export const Referral = () => {
       message: form.message || 'Interested in referral partner program',
     });
     if (ok) {
-      setForm({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        message: '',
-      });
+      setForm({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+      setFieldErrors({});
     }
   };
 
@@ -158,38 +173,70 @@ export const Referral = () => {
               <div className="absolute inset-0 bg-brand-orange/20 blur-[100px] rounded-full"></div>
               <div className="relative bg-white p-10 rounded-[3rem] shadow-2xl border border-slate-100">
                 <h4 className="text-3xl font-bold text-slate-900 mb-6">Become a Partner</h4>
-                <form className="space-y-4" onSubmit={handleSubmit}>
+                <form className="space-y-4" onSubmit={handleSubmit} noValidate>
                   <div className="grid md:grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      placeholder="First Name"
-                      value={form.firstName}
-                      onChange={(e) => setForm((prev) => ({ ...prev, firstName: e.target.value }))}
-                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Last Name"
-                      value={form.lastName}
-                      onChange={(e) => setForm((prev) => ({ ...prev, lastName: e.target.value }))}
-                      className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
-                    />
+                    <div>
+                      <label htmlFor="ref-firstname" className="sr-only">First Name <span className="text-red-500">*</span></label>
+                      <input
+                        id="ref-firstname"
+                        type="text"
+                        placeholder="First Name *"
+                        value={form.firstName}
+                        required
+                        aria-required="true"
+                        aria-invalid={!!fieldErrors.firstName}
+                        onChange={(e) => { setForm((prev) => ({ ...prev, firstName: e.target.value })); clearErr('firstName'); }}
+                        className={`w-full px-6 py-4 rounded-2xl outline-none ${
+                          fieldErrors.firstName
+                            ? 'bg-red-50 border-2 border-red-300 focus:ring-2 focus:ring-red-400'
+                            : 'bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue'
+                        }`}
+                      />
+                      {fieldErrors.firstName && <p className="text-xs font-semibold text-red-500 mt-1 ml-1" role="alert">{fieldErrors.firstName}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor="ref-lastname" className="sr-only">Last Name</label>
+                      <input
+                        id="ref-lastname"
+                        type="text"
+                        placeholder="Last Name"
+                        value={form.lastName}
+                        onChange={(e) => setForm((prev) => ({ ...prev, lastName: e.target.value }))}
+                        className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
+                      />
+                    </div>
                   </div>
+                  <div>
+                    <label htmlFor="ref-email" className="sr-only">Email Address <span className="text-red-500">*</span></label>
+                    <input
+                      id="ref-email"
+                      type="email"
+                      placeholder="Email Address *"
+                      value={form.email}
+                      required
+                      aria-required="true"
+                      aria-invalid={!!fieldErrors.email}
+                      onChange={(e) => { setForm((prev) => ({ ...prev, email: e.target.value })); clearErr('email'); }}
+                      className={`w-full px-6 py-4 rounded-2xl outline-none ${
+                        fieldErrors.email
+                          ? 'bg-red-50 border-2 border-red-300 focus:ring-2 focus:ring-red-400'
+                          : 'bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue'
+                      }`}
+                    />
+                    {fieldErrors.email && <p className="text-xs font-semibold text-red-500 mt-1 ml-1" role="alert">{fieldErrors.email}</p>}
+                  </div>
+                  <label htmlFor="ref-phone" className="sr-only">Phone Number</label>
                   <input
-                    type="email"
-                    placeholder="Email Address"
-                    value={form.email}
-                    onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
-                    className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
-                  />
-                  <input
+                    id="ref-phone"
                     type="tel"
                     placeholder="Phone Number"
                     value={form.phone}
                     onChange={(e) => setForm((prev) => ({ ...prev, phone: e.target.value }))}
                     className="w-full px-6 py-4 rounded-2xl bg-slate-50 border-none focus:ring-2 focus:ring-brand-blue outline-none"
                   />
+                  <label htmlFor="ref-message" className="sr-only">Message</label>
                   <textarea
+                    id="ref-message"
                     placeholder="Tell us why you'd like to join our referral program"
                     rows={4}
                     value={form.message}
@@ -201,13 +248,18 @@ export const Referral = () => {
                     disabled={status === 'sending'}
                     className="w-full bg-brand-orange text-white py-5 rounded-2xl font-bold text-lg hover:bg-brand-blue transition-all shadow-lg shadow-brand-orange/20 disabled:opacity-70"
                   >
-                    {status === 'sending' ? 'Sending...' : 'Register Now'}
+                    {status === 'sending' ? (
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </span>
+                    ) : 'Register Now'}
                   </button>
                   {status === 'success' && (
-                    <p className="text-sm font-semibold text-emerald-600">Thanks! Your inquiry has been received.</p>
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-semibold text-emerald-600">Thanks! Your inquiry has been received.</motion.p>
                   )}
                   {status === 'error' && (
-                    <p className="text-sm font-semibold text-red-600">{error}</p>
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm font-semibold text-red-600">{error}</motion.p>
                   )}
                 </form>
               </div>

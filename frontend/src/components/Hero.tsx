@@ -17,12 +17,32 @@ const VISA_OPTIONS = [
   'Family Sponsorship',
 ] as const;
 
+interface HeroFieldErrors {
+  name?: string;
+  email?: string;
+}
+
 export const Hero = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', visaTrack: 'Study Abroad' });
+  const [fieldErrors, setFieldErrors] = useState<HeroFieldErrors>({});
   const { status, error, submit } = useInquiryForm();
+
+  const validate = (): boolean => {
+    const errors: HeroFieldErrors = {};
+    if (!form.name.trim()) errors.name = 'Name is required';
+    if (!form.email.trim()) errors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = 'Please enter a valid email';
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const clearErr = (f: keyof HeroFieldErrors) => {
+    setFieldErrors((prev) => { const n = { ...prev }; delete n[f]; return n; });
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!validate()) return;
     const ok = await submit({
       name: form.name,
       email: form.email,
@@ -30,7 +50,7 @@ export const Hero = () => {
       visaType: form.visaTrack,
       message: `Interested in: ${form.visaTrack}`,
     });
-    if (ok) setForm({ name: '', email: '', phone: '', visaTrack: 'Study Abroad' });
+    if (ok) { setForm({ name: '', email: '', phone: '', visaTrack: 'Study Abroad' }); setFieldErrors({}); }
   };
 
   return (
@@ -118,23 +138,44 @@ export const Hero = () => {
             </p>
 
             <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+              <div>
+                <input
+                  id="hero-name"
+                  type="text"
+                  placeholder="Full Name *"
+                  value={form.name}
+                  onChange={(e) => { setForm((p) => ({ ...p, name: e.target.value })); clearErr('name'); }}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!fieldErrors.name}
+                  className={`w-full px-5 py-4 rounded-2xl outline-none transition-all text-sm ${
+                    fieldErrors.name
+                      ? 'bg-red-50 border-2 border-red-300 focus:ring-2 focus:ring-red-400'
+                      : 'bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20'
+                  }`}
+                />
+                {fieldErrors.name && <p className="text-xs font-semibold text-red-500 mt-1 ml-1" role="alert">{fieldErrors.name}</p>}
+              </div>
+              <div>
+                <input
+                  id="hero-email"
+                  type="email"
+                  placeholder="Email Address *"
+                  value={form.email}
+                  onChange={(e) => { setForm((p) => ({ ...p, email: e.target.value })); clearErr('email'); }}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!fieldErrors.email}
+                  className={`w-full px-5 py-4 rounded-2xl outline-none transition-all text-sm ${
+                    fieldErrors.email
+                      ? 'bg-red-50 border-2 border-red-300 focus:ring-2 focus:ring-red-400'
+                      : 'bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20'
+                  }`}
+                />
+                {fieldErrors.email && <p className="text-xs font-semibold text-red-500 mt-1 ml-1" role="alert">{fieldErrors.email}</p>}
+              </div>
               <input
-                type="text"
-                placeholder="Full Name *"
-                value={form.name}
-                onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                required
-                className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all text-sm"
-              />
-              <input
-                type="email"
-                placeholder="Email Address *"
-                value={form.email}
-                onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                required
-                className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all text-sm"
-              />
-              <input
+                id="hero-phone"
                 type="tel"
                 placeholder="Phone Number"
                 value={form.phone}
@@ -142,6 +183,7 @@ export const Hero = () => {
                 className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all text-sm"
               />
               <select
+                id="hero-visa"
                 value={form.visaTrack}
                 onChange={(e) => setForm((p) => ({ ...p, visaTrack: e.target.value }))}
                 className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-200 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 outline-none transition-all text-sm appearance-none"

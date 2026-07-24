@@ -1,5 +1,5 @@
 import React, { Component, ReactNode, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -27,8 +27,8 @@ interface ErrorBoundaryState {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
   }
+  state: Readonly<ErrorBoundaryState> = { hasError: false };
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { hasError: true, error };
@@ -39,7 +39,11 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 
   render() {
-    if (this.state.hasError) {
+    const that = this as unknown as {
+      state: ErrorBoundaryState;
+      props: ErrorBoundaryProps & { children: ReactNode };
+    };
+    if (that.state.hasError) {
       return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">
           <h2 className="text-2xl font-bold text-slate-800 mb-2">Something went wrong</h2>
@@ -55,7 +59,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         </div>
       );
     }
-    return this.props.children;
+    return that.props.children;
   }
 }
 
@@ -67,12 +71,30 @@ function PageFallback() {
   );
 }
 
+function NotFound() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[70vh] px-6 text-center">
+      <div className="text-8xl font-bold text-brand-orange mb-4">404</div>
+      <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Page Not Found</h1>
+      <p className="text-slate-600 max-w-md mb-8 text-lg">
+        The page you're looking for doesn't exist or has been moved. Let us help you find the right path.
+      </p>
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 bg-brand-orange text-white px-8 py-4 rounded-2xl font-bold hover:bg-brand-blue transition-all shadow-lg shadow-brand-orange/20"
+      >
+        Go to Homepage
+      </Link>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main id="main-content" className="flex-grow outline-none" tabIndex={-1}>
           <ErrorBoundary>
             <Suspense fallback={<PageFallback />}>
               <Routes>
@@ -87,6 +109,7 @@ export default function App() {
                 <Route path="/study-destinations/:country" element={<StudyDestinationsPage />} />
                 <Route path="/country/:slug" element={<CountryStudyPage />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
           </ErrorBoundary>

@@ -54,7 +54,7 @@ export const Navbar = () => {
   );
 
   /* ---------- Desktop link ---------- */
-  const DesktopLink = ({ href, name, hasDropdown }: { href: string; name: string; hasDropdown?: boolean }) => {
+  const DesktopLink = ({ href, name, hasDropdown }: { href: string; name: string; hasDropdown?: boolean; key?: string }) => {
     if (href === '/study-destinations') {
       return (
         <div

@@ -5,28 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="application-name" content="Ready2Go Overseas" />
     <meta name="apple-mobile-web-app-title" content="Ready2Go Overseas" />
+    <meta name="theme-color" content="#0b2e5e" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=yes" />
     <meta
       name="description"
-      content="Ready2Go Overseas helps students, professionals, and families with study abroad, visa, and immigration guidance."
+      content="Ready2Go Overseas helps students, professionals, and families with study abroad, visa, and immigration guidance. Free consultation available."
     />
     <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Ready2Go Overseas" />
     <meta property="og:title" content="Ready2Go Overseas | Study Abroad, Visa & Immigration" />
     <meta
       property="og:description"
-      content="Trusted study abroad, visa, and immigration guidance for students, professionals, and families."
+      content="Trusted study abroad, visa, and immigration guidance for students, professionals, and families. 8+ years of expertise."
     />
     <meta property="og:url" content="https://www.ready2gooverseas.com/" />
+    <meta property="og:locale" content="en_IN" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Ready2Go Overseas | Study Abroad, Visa & Immigration" />
     <meta
       name="twitter:description"
-      content="Trusted study abroad, visa, and immigration guidance for students, professionals, and families."
+      content="Trusted study abroad, visa, and immigration guidance for students, professionals, and families. 8+ years of expertise."
     />
     <link rel="canonical" href="https://www.ready2gooverseas.com/" />
     <title>Ready2Go Overseas | Study Abroad, Visa & Immigration</title>
     <link rel="icon" href="/favicon.jpeg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="/favicon.jpeg" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -35,7 +41,25 @@
             "@type": "Organization",
             "@id": "https://www.ready2gooverseas.com/#organization",
             "name": "Ready2Go Overseas",
-            "url": "https://www.ready2gooverseas.com/"
+            "url": "https://www.ready2gooverseas.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.ready2gooverseas.com/favicon.jpeg"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-7702558704",
+              "contactType": "customer service",
+              "availableLanguage": ["English", "Hindi", "Telugu"]
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "F-16, Ground Floor, Gayathri Towers, Main Road, Green Hills Colony, Kothapet",
+              "addressLocality": "Hyderabad",
+              "addressRegion": "Telangana",
+              "postalCode": "500035",
+              "addressCountry": "IN"
+            }
           },
           {
             "@type": "WebSite",
@@ -46,12 +70,40 @@
             "publisher": {
               "@id": "https://www.ready2gooverseas.com/#organization"
             }
+          },
+          {
+            "@type": "LocalBusiness",
+            "@id": "https://www.ready2gooverseas.com/#business",
+            "name": "Ready2Go Overseas Consultancy",
+            "image": "https://www.ready2gooverseas.com/favicon.jpeg",
+            "telephone": "+91-7702558704",
+            "email": "info@ready2gooverseas.com",
+            "priceRange": "₹",
+            "areaServed": "IN",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "opens": "09:00",
+                "closes": "18:00"
+              }
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "50",
+              "bestRating": "5"
+            }
           }
         ]
       }
     </script>
   </head>
   <body>
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-6 focus:py-3 focus:bg-brand-blue focus:text-white focus:rounded-2xl focus:font-bold focus:text-sm focus:outline-none">
+      Skip to main content
+    </a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
