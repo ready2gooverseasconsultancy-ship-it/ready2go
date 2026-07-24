@@ -305,3 +305,5 @@ export const CountryStudyPage = () => {
     </div>
   );
 };
+
+export default CountryStudyPage;

@@ -101,3 +101,5 @@ export const Process = () => {
     </div>
   );
 };
+
+export default Process;

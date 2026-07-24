@@ -152,3 +152,5 @@ export const Updates = () => {
     </div>
   );
 };
+
+export default Updates;

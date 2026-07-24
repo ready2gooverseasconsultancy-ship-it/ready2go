@@ -238,3 +238,5 @@ export const Referral = () => {
     </div>
   );
 };
+
+export default Referral;
