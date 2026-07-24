@@ -1,0 +1,197 @@
+/* ============================================================
+ * Design System — Ready2Go Overseas
+ * ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+ * Theme Tokens
+ * ============================================================ */
+
+@theme {
+  /* --- Typography --- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+
+  /* --- Brand Colors --- */
+  --color-brand-blue: #0b2e5e;
+  --color-brand-blue-50: #eef3fa;
+  --color-brand-blue-100: #d5e0f0;
+  --color-brand-blue-200: #b3c6e3;
+  --color-brand-blue-300: #87a6d1;
+  --color-brand-blue-400: #5c85c0;
+  --color-brand-blue-500: #3b6aaf;
+  --color-brand-blue-600: #0b2e5e;
+  --color-brand-blue-700: #082146;
+  --color-brand-blue-800: #051630;
+  --color-brand-blue-900: #030c1b;
+
+  --color-brand-orange: #f68b1e;
+  --color-brand-orange-50: #fef6ee;
+  --color-brand-orange-100: #fde8d4;
+  --color-brand-orange-200: #fbd0a8;
+  --color-brand-orange-300: #f8b87d;
+  --color-brand-orange-400: #f6a051;
+  --color-brand-orange-500: #f68b1e;
+  --color-brand-orange-600: #d97510;
+  --color-brand-orange-700: #b05f0c;
+  --color-brand-orange-800: #874808;
+  --color-brand-orange-900: #5e3205;
+
+  --color-brand-sky: #8ec9f3;
+  --color-brand-dark: #0b1a2e;
+  --color-brand-ink: #0a1424;
+  --color-brand-cream: #f5f8fc;
+
+  /* --- Semantic Colors --- */
+  --color-success: #10b981;
+  --color-success-bg: #ecfdf5;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fffbeb;
+  --color-error: #ef4444;
+  --color-error-bg: #fef2f2;
+  --color-info: #3b82f6;
+  --color-info-bg: #eff6ff;
+
+  /* --- Surface Colors --- */
+  --color-surface: #ffffff;
+  --color-surface-secondary: #f8fafc;
+  --color-surface-tertiary: #f1f5f9;
+
+  /* --- Border Radius --- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+  --radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-soft: 0 4px 24px -8px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 8px 32px -12px rgba(15, 23, 42, 0.12);
+  --shadow-hover: 0 16px 48px -16px rgba(15, 23, 42, 0.18);
+  --shadow-glow: 0 0 40px -8px rgba(246, 139, 30, 0.25);
+}
+
+/* ============================================================
+ * Base Styles
+ * ============================================================ */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-brand-dark bg-slate-50 antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  ::selection {
+    background: rgba(246, 139, 30, 0.35);
+    color: #0b1a2e;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-orange rounded-lg;
+  }
+}
+
+/* ============================================================
+ * Utility Classes
+ * ============================================================ */
+
+@layer utilities {
+  .content-section {
+    @apply py-24 md:py-32 px-6 md:px-12 lg:px-24;
+  }
+
+  .section-label {
+    @apply text-brand-blue font-bold tracking-[0.35em] uppercase text-xs md:text-sm;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900;
+  }
+
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-soft;
+  }
+
+  .soft-shadow {
+    box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.45);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ============================================================
+ * Animations
+ * ============================================================ */
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes scale-in {
+  0% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.reveal-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Staggered children via inline style --delay */
+[style*="--delay"] {
+  animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--delay) * 1s);
+}
+
+/* ============================================================
+ * Scrollbar
+ * ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
