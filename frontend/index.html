@@ -49,6 +49,73 @@
     />
 
     <title>Ready2Go Overseas | Study Abroad, Visa & Immigration</title>
+
+    <!-- Base structured data (Organization + WebSite + LocalBusiness) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://www.ready2gooverseas.com/#organization",
+            "name": "Ready2Go Overseas",
+            "url": "https://www.ready2gooverseas.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.ready2gooverseas.com/favicon.jpeg"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+91-7702558704",
+              "contactType": "customer service",
+              "availableLanguage": ["English", "Hindi", "Telugu"]
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "F-16, Ground Floor, Gayathri Towers, Main Road, Green Hills Colony, Kothapet",
+              "addressLocality": "Hyderabad",
+              "addressRegion": "Telangana",
+              "postalCode": "500035",
+              "addressCountry": "IN"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.ready2gooverseas.com/#website",
+            "name": "Ready2Go Overseas",
+            "alternateName": "Ready2Go Overseas Consultancy",
+            "url": "https://www.ready2gooverseas.com/",
+            "publisher": {
+              "@id": "https://www.ready2gooverseas.com/#organization"
+            }
+          },
+          {
+            "@type": "LocalBusiness",
+            "@id": "https://www.ready2gooverseas.com/#business",
+            "name": "Ready2Go Overseas Consultancy",
+            "image": "https://www.ready2gooverseas.com/favicon.jpeg",
+            "telephone": "+91-7702558704",
+            "email": "info@ready2gooverseas.com",
+            "priceRange": "₹",
+            "areaServed": "IN",
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "opens": "09:00",
+                "closes": "18:00"
+              }
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "50",
+              "bestRating": "5"
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <!-- Skip to content link for accessibility -->

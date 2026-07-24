@@ -115,6 +115,8 @@ app.get('/sitemap.xml', (_req, res) => {
     { loc: '/country/study-in-new-zealand', priority: '0.8' },
     { loc: '/country/study-in-uae', priority: '0.7' },
     { loc: '/country/study-in-singapore', priority: '0.7' },
+    { loc: '/country/study-in-europe', priority: '0.7' },
+    { loc: '/country/study-in-asia', priority: '0.7' },
   ];
 
   const today = new Date().toISOString().split('T')[0];
